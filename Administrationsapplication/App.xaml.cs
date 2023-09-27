@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Administrationsapplication.MVVM.Core;
 using Administrationsapplication.MVVM.ViewModels;
 using Administrationsapplication.Services;
 using System.Windows;
+using System.Net.Http;
 
 namespace Administrationsapplication;
 
@@ -14,29 +14,28 @@ public partial class App : Application
     public App()
     {
         AppHost = Host.CreateDefaultBuilder()
-            .ConfigureServices((config, services) =>
+            .ConfigureServices(services =>
             {
-                services.AddSingleton<NavigationStore>();
-                services.AddSingleton<DateTimeService>();
+                services.AddTransient<HttpClient>();
+                services.AddSingleton<DateAndTimeService>();
+                services.AddSingleton<WeatherService>();
+                services.AddSingleton<DeviceService>();
 
-
-                services.AddSingleton<MainWindow>();
                 services.AddSingleton<HomeViewModel>();
                 services.AddSingleton<SettingsViewModel>();
+                services.AddSingleton<MainWindowViewModel>();
+                services.AddSingleton<MainWindow>();
             })
             .Build();
     }
 
-    protected override async void OnStartup(StartupEventArgs args)
+    protected override async void OnStartup(StartupEventArgs e)
     {
-        var mainWindow = AppHost!.Services.GetRequiredService<MainWindow>();
-        var navigationStore = AppHost!.Services.GetRequiredService<NavigationStore>();
-        var dateTimeService = AppHost!.Services.GetService<DateTimeService>();
-
-        navigationStore.CurrentViewModel = new HomeViewModel(navigationStore, dateTimeService!);
-
         await AppHost!.StartAsync();
+
+        var mainWindow = AppHost!.Services.GetRequiredService<MainWindow>();
         mainWindow.Show();
-        base.OnStartup(args);
+
+        base.OnStartup(e);
     }
 }

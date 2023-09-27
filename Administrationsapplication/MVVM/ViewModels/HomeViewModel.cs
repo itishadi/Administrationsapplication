@@ -1,40 +1,77 @@
-﻿using Administrationsapplication.MVVM.Core;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using Administrationsapplication.Services;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using System;
 
 namespace Administrationsapplication.MVVM.ViewModels;
 
-public class HomeViewModel : ObservableObject
+public partial class HomeViewModel : ObservableObject
 {
-    private readonly NavigationStore _navigationStore;
-    private readonly DateTimeService _dateTimeService;
+    private readonly IServiceProvider _serviceProvider;
+    private readonly DateAndTimeService _dateAndTimeService;
+    private readonly WeatherService _weatherService;
 
-    public HomeViewModel(NavigationStore navigationStore, DateTimeService dateTimeService)
+    public HomeViewModel(IServiceProvider serviceProvider, DateAndTimeService dateAndTimeService, WeatherService weatherService)
     {
-        _navigationStore = navigationStore;
-        _dateTimeService = dateTimeService;
+        _serviceProvider = serviceProvider;
+        _dateAndTimeService = dateAndTimeService;
+        _weatherService = weatherService;
 
-        Task.Run(() => GetDateTime());
+        UpdateDateAndTime();
+        UpdateWeather();
     }
 
-    // Navigation
-    public ICommand NavigateToSettingsCommand =>
-        new RelayCommand(() => _navigationStore.CurrentViewModel = new SettingsViewModel(_navigationStore, _dateTimeService));
+    [ObservableProperty]
+    private string? _title = "Home";
 
-    private string? _currentTime;
-    public string? CurrentTime { get => _currentTime; set => SetValue(ref _currentTime, value); }
+    [ObservableProperty]
+    private string? _currentTime = "--:--";
 
+    [ObservableProperty]
     private string? _currentDate;
-    public string? CurrentDate { get => _currentDate; set => SetValue(ref _currentDate, value); }
 
+    [ObservableProperty]
+    private string? _currentWeatherCondition = "\ue137";
 
-    private void GetDateTime()
+    [ObservableProperty]
+    private string? _currentOutsideTemperature = "--";
+
+    [ObservableProperty]
+    private string? _currentOutsideTemperatureUnit = "°C";
+
+    [ObservableProperty]
+    private string? _currentInsideTemperature = "--";
+
+    [ObservableProperty]
+    private string? _currentInsideTemperatureUnit = "°C";
+
+    [RelayCommand]
+    private void NavigateToSettings()
     {
-        while (true)
+        var mainWindowViewModel = _serviceProvider.GetRequiredService<MainWindowViewModel>();
+        mainWindowViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<SettingsViewModel>();
+    }
+
+
+    private void UpdateDateAndTime()
+    {
+
+        _dateAndTimeService.TimeUpdated += () =>
         {
-            CurrentTime = _dateTimeService.CurrentTime;
-            CurrentDate = _dateTimeService.CurrentDate;
-        }
+            CurrentDate = _dateAndTimeService.CurrentDate;
+            CurrentTime = _dateAndTimeService.CurrentTime;
+        };
+    }
+
+    private void UpdateWeather()
+    {
+
+        _weatherService.WeatherUpdated += () =>
+        {
+            CurrentWeatherCondition = _weatherService.CurrentWeatherCondition;
+            CurrentOutsideTemperature = _weatherService.CurrentOutsideTemperature;
+            CurrentInsideTemperature = _weatherService.CurrentInsideTemperature;
+        };
     }
 }

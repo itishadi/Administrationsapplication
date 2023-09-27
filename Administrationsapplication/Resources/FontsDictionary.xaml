@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <FontFamily x:Key="FontAwesome-Brands">../Assets/Fonts/fa-brand-400.ttf#Font Awesome 6 Brands Regular</FontFamily>
     <FontFamily x:Key="FontAwesome-Duotone">../Assets/Fonts/fa-duotone-900.ttf#Font Awesome 6 Duotone Solid</FontFamily>
@@ -9,5 +9,6 @@
     <FontFamily x:Key="FontAwesome-Sharp-Regular">../Assets/Fonts/fa-sharp-regular-400.ttf#Font Awesome 6 Sharp Regular</FontFamily>
     <FontFamily x:Key="FontAwesome-Sharp-Solid">../Assets/Fonts/fa-sharp-solid-900.ttf#Font Awesome 6 Sharp Solid</FontFamily>
     <FontFamily x:Key="FontAwesome-Solid">../Assets/Fonts/fa-solid-900.ttf#Font Awesome 6 Pro Solid</FontFamily>
-    <FontFamily x:Key="FontAwesome-Thin">../Assets/Fonts/fa-thing-100.ttf#Font Awesome 6 Pro Thin</FontFamily>
+    <FontFamily x:Key="FontAwesome-Thin">../Assets/Fonts/fa-thin-100.ttf#Font Awesome 6 Pro Thin</FontFamily>
+
 </ResourceDictionary>

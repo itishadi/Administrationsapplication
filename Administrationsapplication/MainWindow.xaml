@@ -4,10 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Administrationsapplication"
+        xmlns:viewmodels="clr-namespace:Administrationsapplication.MVVM.ViewModels"
+        xmlns:view="clr-namespace:Administrationsapplication.MVVM.Views"
+        xmlns:controls="clr-namespace:Administrationsapplication.MVVM.Controls"
         mc:Ignorable="d"
-             Title="Service Application" Height="720" Width="1280">
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        WindowStyle="None"
+        Title="Service Application" Height="800" Width="1280">
     <Grid>
-        <Image Source="Assets/Images/background.jpg" Stretch="Fill" />
-        <ContentControl Content="{Binding CurrentViewModel}" />
+        <Grid>
+            <Image Source="Assets/Images/background.jpg" Stretch="Fill" />
+            <ContentControl Content="{Binding CurrentViewModel}">
+
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
+                        <view:HomeView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type viewmodels:SettingsViewModel}">
+                        <view:SettingsView />
+                    </DataTemplate>
+
+                </ContentControl.Resources>
+            </ContentControl>
+
+        </Grid >
+        
+        
+        <ItemsControl x:Name="DeviceList" ItemsSource="{Binding Devices}" Grid.Row="1" Margin="0 20 0 0" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <controls:DeviceTileControl  />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
+
 </Window>

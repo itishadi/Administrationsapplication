@@ -4,11 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Administrationsapplication.MVVM.Views"
-             xmlns:viewModels="clr-namespace:Administrationsapplication.MVVM.ViewModels"
-             d:DataContext="{d:DesignInstance Type=viewModels:HomeViewModel}"
+             xmlns:viewmodels="clr-namespace:Administrationsapplication.MVVM.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Height="720" Width="1280">
+             d:DesignHeight="800" d:DesignWidth="1280">
     <Grid>
         <Rectangle Fill="#000000" Opacity="0.82" />
 
@@ -27,6 +26,20 @@
                 </Grid.ColumnDefinitions>
 
                 <!--Weather Section-->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <TextBlock Text="{Binding CurrentWeatherCondition, FallbackValue=&#xe137;}" Style="{StaticResource WeatherCondition }" />
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding CurrentOutsideTemperature, FallbackValue=--}" Style="{StaticResource WeatherOutsideTemperature}" />
+                            <TextBlock Text="{Binding CurrentOutsideTemperatureUnit, FallbackValue=°C}" Style="{StaticResource WeatherOutsideTemperatureUnit}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding CurrentInsideTemperature, FallbackValue=--}" Style="{StaticResource WeatherInsideTemperature}" />
+                            <TextBlock Text="{Binding CurrentInsideTemperatureUnit, FallbackValue=°C}" Style="{StaticResource WeatherInsideTemperatureUnit}" />
+                        </StackPanel>
+                    </StackPanel>
+
+                </StackPanel>
 
                 <!--DateTime Section-->
                 <StackPanel Grid.Column="1" HorizontalAlignment="Center">

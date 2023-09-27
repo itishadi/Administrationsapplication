@@ -1,16 +1,16 @@
-﻿namespace Administrationsapplication.MVVM.Core;
+﻿//namespace Administrationsapplication.MVVM.Core;
 
-public class NavigationStore : ObservableObject
-{
-    private ObservableObject? _currentViewModel;
-    public ObservableObject? CurrentViewModel
-    {
-        get => _currentViewModel;
-        set => SetValue(ref _currentViewModel, value);
-    }
+//public class NavigationStore : ObservableObject
+//{
+//    private ObservableObject? _currentViewModel;
+//    public ObservableObject? CurrentViewModel
+//    {
+//        get => _currentViewModel;
+//        set => SetValue(ref _currentViewModel, value);
+//    }
 
-    public void NavigateTo(ObservableObject? viewModel)
-    {
-        CurrentViewModel = viewModel;
-    }
-}
+//    public void NavigateTo(ObservableObject? viewModel)
+//    {
+//        CurrentViewModel = viewModel;
+//    }
+//}

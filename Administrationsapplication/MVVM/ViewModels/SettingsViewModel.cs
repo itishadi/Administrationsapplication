@@ -1,32 +1,53 @@
-﻿using Administrationsapplication.MVVM.Core;
-using Administrationsapplication.Services;
-using System.Windows.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Administrationsapplication.MVVM.ViewModels;
 
-public class SettingsViewModel : ObservableObject
+public partial class SettingsViewModel : ObservableObject
 {
-    private readonly NavigationStore _navigationStore;
-    private readonly DateTimeService _dateTimeService;
+    private readonly IServiceProvider _serviceProvider;
 
-    public SettingsViewModel(NavigationStore navigationStore, DateTimeService dateTimeService)
+    public SettingsViewModel(IServiceProvider serviceProvider)
     {
-        _navigationStore = navigationStore;
-        _dateTimeService = dateTimeService;
+        _serviceProvider = serviceProvider;
     }
 
-    // Navigation
-    public ICommand NavigateToHomeCommand =>
-        new RelayCommand(() => _navigationStore.CurrentViewModel = new HomeViewModel(_navigationStore, _dateTimeService));
-
-    public ICommand CloseApplicationCommand =>
-        new RelayCommand(() => ApplicationService.CloseApplication());
-
-
+    [ObservableProperty]
     private string? _title = "Settings";
-    public string? Title { get => _title; set => SetValue(ref _title, value); }
 
+    [ObservableProperty]
+    private ObservableObject? _currentContentViewModel;
 
+    [RelayCommand]
+    private void NavigateToHome()
+    {
+        var mainWindowViewModel = _serviceProvider.GetRequiredService<MainWindowViewModel>();
+        mainWindowViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
+    }
 
+    [RelayCommand]
+    private void ShowAddDevice()
+    {
 
+    }
+
+    [RelayCommand]
+    private void ShowDeviceList()
+    {
+
+    }
+
+    [RelayCommand]
+    private void ShowConfiguration()
+    {
+
+    }
+
+    [RelayCommand]
+    private void ExitApplication()
+    {
+        Environment.Exit(0);
+    }
 }
